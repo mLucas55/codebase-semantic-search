@@ -4,6 +4,7 @@ import chromadb
 
 from pathlib import Path
 import ast
+import sys
 
 from dotenv import load_dotenv
 import os
@@ -22,11 +23,6 @@ try:
 except:
     pass
 collection = client.create_collection(name="code_index")
-
-chunks = []       # The code itself
-metadatas = []    # Info about each chunk
-ids = []
-chunk_id = 0
 
 def generate_embeddings(texts):
     response = gemeni.models.embed_content(
@@ -80,28 +76,50 @@ def extract_functions_ast(content):
     
     return functions
 
-for file_path, content in walk_codebase("/Users/lucasmonroe/development/codebase-semantic-search/test-repo"):
-    print(f"Found: {file_path}")
-    functions = extract_functions_ast(content)
+def index_codebase(root_path):
+    """Index all Python files in the specified directory"""
+    print(f"📂 Indexing codebase at: {root_path}")
     
-    for func in functions:
-        chunks.append(func["data"])
+    chunks = []       # The code itself
+    metadatas = []    # Info about each chunk
+    ids = []
+    chunk_id = 0
+    
+    for file_path, content in walk_codebase(root_path):
+        print(f"Found: {file_path}")
+        functions = extract_functions_ast(content)
+        
+        for func in functions:
+            chunks.append(func["data"])
 
-        metadatas.append({
-            "file_path": file_path,
-            "name": func["name"],
-            "line": func["lineno"],
-            "type": "function"
-        })
+            metadatas.append({
+                "file_path": file_path,
+                "name": func["name"],
+                "line": func["lineno"],
+                "type": "function"
+            })
 
-        ids.append(f"chunk_{chunk_id}")
-        chunk_id += 1
+            ids.append(f"chunk_{chunk_id}")
+            chunk_id += 1
 
-embeddings = generate_embeddings(chunks)
+    print(f"\n🔮 Generating embeddings for {len(chunks)} code chunks...")
+    embeddings = generate_embeddings(chunks)
 
-collection.add(
-    ids=ids,
-    documents=chunks,
-    embeddings=embeddings,
-    metadatas=metadatas
-)
+    print("💾 Storing in ChromaDB...")
+    collection.add(
+        ids=ids,
+        documents=chunks,
+        embeddings=embeddings,
+        metadatas=metadatas
+    )
+    
+    print(f"✅ Indexing complete! Indexed {len(chunks)} functions.")
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python index.py <root_path>")
+        print('Example: python index.py ./test-repo')
+        sys.exit(1)
+    
+    root_path = sys.argv[1]
+    index_codebase(root_path)
