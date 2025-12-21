@@ -21,7 +21,7 @@ def generate_query_embedding(query):
 def search_code(query, n_results=5):
     """Search the indexed codebase"""
     print(f"🔍 Searching for: '{query}'")
-    print("🔮 Generating query embedding...\n")
+    print("🧠 Generating query embedding...\n")
     
     # Generate query embedding
     query_embedding = generate_query_embedding(query)
@@ -49,8 +49,8 @@ def search_code(query, n_results=5):
         similarity = 1 - distance  # Convert distance to similarity score
         
         print(f"\n🎯 Result #{i} (similarity: {similarity:.2%})")
-        print(f"📁 File: {metadata['file_path']}:{metadata['line']}")
-        print(f"🏷️  Function: {metadata['name']}")
+        print(f"File: {metadata['file_path']}:{metadata['line']}")
+        print(f"Function: {metadata['name']}")
         
         print(f"\n📝 Code:")
         print("─" * 80)
