@@ -1,6 +1,6 @@
 import sys
 
-def help():
+def show_help():
         print("""
 Usage: vec-<command> [options]
 

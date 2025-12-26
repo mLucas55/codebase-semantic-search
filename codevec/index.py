@@ -23,7 +23,6 @@ def walk_codebase(root_path):
     """Find all Python files in a directory"""
     root = Path(root_path)
     
-    # Find all .py files recursively (current folder + all subfolders ----- top down)
     for py_file in root.rglob("*.py"):
         # Skip irrelevant directories 
         if any(segment.startswith('.') or segment == '__pycache__' for segment in py_file.parts):
@@ -100,14 +99,14 @@ def index_codebase(root_path):
     # Create a fresh collection (delete existing one if present)
     try:
         client.delete_collection("code_index")
-    except Exception:
-        pass
+    except ValueError:
+        pass  # Collection doesn't exist yet
     collection = client.create_collection(name="code_index")
     
-    chunks = []       # The code itself
-    metadatas = []    # Info about each chunk
-    ids = []          # list that stores formatted chunk_ids
-    chunk_id = 0      # Counter for formatting
+    chunks = []
+    metadatas = []
+    ids = []
+    chunk_id = 0
     
     print("Scanning Python files...")
     

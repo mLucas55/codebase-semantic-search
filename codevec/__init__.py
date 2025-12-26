@@ -1,1 +1,1 @@
-from .cli import indexer, searcher, help
+from .cli import indexer, searcher, show_help
