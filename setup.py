@@ -8,7 +8,7 @@ setup(
     version='1.0.0',
     author="Lucas Monroe",
     author_email="lucas.i.monroe1@gmail.com",
-    description="Semantic search for Python codebases using embeddings",
+    description="Semantic search for functions in Python codebases",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/mlucas55/codevec",
