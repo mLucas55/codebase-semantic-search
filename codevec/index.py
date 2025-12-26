@@ -99,7 +99,7 @@ def index_codebase(root_path):
     # Create a fresh collection (delete existing one if present)
     try:
         client.delete_collection("code_index")
-    except ValueError:
+    except Exception:
         pass  # Collection doesn't exist yet
     collection = client.create_collection(name="code_index")
     

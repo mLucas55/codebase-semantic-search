@@ -1,6 +1,6 @@
 # codevec
 
-Codevec is a semantic search tool for finding python functions in your codebases. Index and embedd your codebase, then search for functions using natural language to find relevant results in seconds.
+Codevec is a semantic search tool for finding python functions in your codebases. Index and embed your codebase, then search for functions using natural language to find relevant results in seconds.
 
 ## Installation
 
