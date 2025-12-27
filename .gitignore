@@ -9,3 +9,4 @@ build/
 .codevec/
 .DS_Store
 build_commands.txt
+dist/
