@@ -19,7 +19,7 @@ pip install codevec
 
 Codevec lets you find Python functions using plain English queries when you don't know the exact keywords to grep. It runs entirely on lightweight local models, so your code never leaves your machine and you can search as much as you want without usage caps or costs. Index your codebase and start getting search results within seconds of installing the package!
 
-Unlike general-purpose AI assistants, Codevec is purpose-built for code search—no token limits, no API calls, and often faster at pinpointing specific functions.
+Unlike general-purpose AI assistants, Codevec is purpose-built for code search—no usage limits, no API calls, no verbose explanations, and is often faster at pinpointing specific function locations.
 
 > **Note:** Codevec currently indexes Python functions only. Module-level code is not indexed.
 
@@ -82,9 +82,10 @@ vec-server  # Starts server on localhost:8000
 
 ## How It Works
 
-**Indexing & Embedding** — Codevec walks your codebase and uses AST parsing to discover Python functions, then uses lightweight local models to generate embeddings that get stored in ChromaDB
+**Indexing & Embedding** — Codevec walks your codebase and uses AST parsing to discover Python functions, then uses a lightweight local transformer to generate embeddings that get stored in ChromaDB
 
-**ChromaDB Storage** — Embeddings for indexed code are stored in a ChromaDB collection located at `.codevec/` in your project root
+**ChromaDB Storage** — Embeddings are stored in a ChromaDB collection located at `.codevec/` in your project root
 
+**Searching** — Queries are embedded and matched against ChromaDB using semantic similarity, then results are reranked using a cross-encoder for improved relevance
 
 **Re-indexing** — Simply run `vec-index` again on the same directory to update the index with new or modified functions
