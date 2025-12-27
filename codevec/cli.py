@@ -84,7 +84,7 @@ def run_server(host: str = "0.0.0.0", port: int = 8000):
     """
     import uvicorn
     
-    print(f"\nStarting embedding server on http://{host}:{port}")
+    print(f"\nStarting model server on http://{host}:{port}")
     print("   Press CTRL+C to stop\n")
     
     uvicorn.run(
