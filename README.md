@@ -40,12 +40,12 @@ vec-index ./your/project/filepath
 
 #### Run from inside the indexed codebase:
 ```bash
-vec-search authentication logic
+vec-search email validation
 ```
 
 #### Run from outside the indexed codebase:
 ```bash
-vec-search "email validation" --repo ./your/project/filepath
+vec-search "authentication logic" --repo ./your/project/filepath
 ```
 ### 3. Example results
 ```
