@@ -17,21 +17,11 @@ pip install codevec
 
 ## Overview
 
-**Natural Language Search** — Find Python functions using plain English queries instead of grepping through code
+Codevec lets you find Python functions using plain English queries when you don't know the exact keywords to grep. It runs entirely on lightweight local models, so your code never leaves your machine and you can search as much as you want without usage caps or costs. Index your codebase and start getting search results within seconds of installing the package!
 
-**Fast** — Index, search, and get results within seconds of installing Codevec
+Unlike general-purpose AI assistants, Codevec is purpose-built for code search—no token limits, no API calls, and often faster at pinpointing specific functions.
 
-
-
-> **Note:** Codevec currently indexes functions only. Module-level code is not included in search results.
-
-### Why Codevec over Copilot?
-
-**No Token Limits** — Runs entirely on lightweight local models, so you can search as much as you want without usage caps or costs
-
-**Speed** — Often faster at finding specific functions since it's purpose-built for code search, returning results in seconds
-
-**Privacy** — Your code never leaves your machine
+> **Note:** Codevec currently indexes Python functions only. Module-level code is not indexed.
 
 
 ## Quick Start
@@ -42,9 +32,9 @@ pip install codevec
 
 
 ```bash
-vec-index ./your/project/file/path
+vec-index ./your/project/filepath
 ```
-
+> **Note:** Don't forget to re-index after big changes!
 
 ### 2. Search with natural language
 
@@ -55,9 +45,31 @@ vec-search authentication logic
 
 #### Run from outside the indexed codebase:
 ```bash
-vec-search "email validation" --repo ./your-project
+vec-search "email validation" --repo ./your/project/filepath
+```
+### 3. Example results
+```
+(.venv) user@Computer demo-repo % vec-search email validation
+Initializing search system...
+Found 5 results
+
+================================================================================
+
+┌─ Result #1 ───────────────────────────────────────────────────────────
+│ Similarity: 49.3%  │  Rerank: -2.527
+├───────────────────────────────────────────────────────────────────────────────
+│ 📁 File: /Users/user/development/project/utils/validation.py
+│ ⚙️ Function: validate_email (line 5)
+├───────────────────────────────────────────────────────────────────────────────
+│ Code:
+│    5 │ def validate_email(email):
+│    6 │     """Check if email address is in valid format"""
+│    7 │     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+│    8 │     return re.match(pattern, email) is not None
+└───────────────────────────────────────────────────────────────────────────────
 ```
 
+> **Note:** The filepath is clickable in VS Code terminals!
 
 ## Optional: Model server
 
@@ -65,12 +77,12 @@ Run the model server to keep models loaded in memory for faster searches:
 
 ```bash
 vec-server  # Starts server on localhost:8000
-            # Codevec will automatically use the server when available.
+            # Codevec will automatically use the server when available
 ```
 
 ## How It Works
 
-**Indexing** — Codevec walks your codebase to discover Python functions, then uses lightweight local models to generate embeddings
+**Indexing & Embedding** — Codevec walks your codebase and uses AST parsing to discover Python functions, then uses lightweight local models to generate embeddings that get stored in ChromaDB
 
 **ChromaDB Storage** — Embeddings for indexed code are stored in a ChromaDB collection located at `.codevec/` in your project root
 
