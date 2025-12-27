@@ -3,7 +3,7 @@
 
 # Codevec
 
-#### Codevec is the user-friendly semantic search tool for Python codebases.
+#### Codevec is a user-friendly semantic search tool for Python codebases.
 
 
 ![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
@@ -19,7 +19,7 @@ pip install codevec
 
 Codevec is a semantic search tool for Python codebases that lets you find functions using plain English queries—no need to know exact function names or keywords to grep.
 
-It runs entirely on lightweight local models, so indexing and searching a codebase take only seconds. Being entirely local, your code never leaves your machine: no API calls, no usage limits, and no external dependencies.
+It runs entirely on lightweight local models, so indexing and searching a codebase take only seconds. Being entirely local, your code never leaves your machine: no API calls, no usage limits.
 
 Unlike general-purpose AI assistants, Codevec is purpose-built for code search. It focuses on quickly pinpointing relevant function definitions without verbose explanations, making it especially effective for navigating large or unfamiliar repositories.
 
@@ -36,20 +36,21 @@ Unlike general-purpose AI assistants, Codevec is purpose-built for code search. 
 ```bash
 vec-index ./your/project/filepath
 ```
-> **Note:** Don't forget to re-index after big changes!
+> **Note:** Re-index after making significant changes to your codebase!
 
 ### 2. Search with natural language
 
-#### Run from inside the indexed codebase:
+#### Search from a terminal within the indexed codebase:
 ```bash
 vec-search email validation
 ```
 
-#### Run from outside the indexed codebase:
+#### Search from a different directory:
 ```bash
 vec-search "authentication logic" --repo ./your/project/filepath
 ```
-### 3. Example results
+
+### 3. results
 ```
 (.venv) user@Computer demo-repo % vec-search email validation
 Initializing search system...
@@ -73,7 +74,7 @@ Found 5 results
 
 > **Note:** The filepath is clickable in VS Code terminals!
 
-## Optional: Model server
+## Advanced Usage: Model server
 
 Run the model server to keep models loaded in memory for faster searches:
 
@@ -84,7 +85,7 @@ vec-server  # Starts server on localhost:8000
 
 ## How It Works
 
-**Indexing & Embedding** — Codevec walks your codebase and uses AST parsing to discover Python functions, then uses a lightweight local transformer to generate embeddings
+**Indexing & Embedding** — Codevec walks your codebase, and uses AST parsing to discover Python functions, then uses a lightweight local transformer to generate embeddings
 
 **ChromaDB Storage** — Embeddings are stored in a ChromaDB collection located at `.codevec/` in your project root
 

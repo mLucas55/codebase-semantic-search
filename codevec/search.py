@@ -114,7 +114,7 @@ def search_code(query, root_path=None, n_results=5):
         root_path = find_repo_root()
         if root_path is None:
             print("Error: No indexed repository found.")
-            print("Either run this command from within an indexed project,")
+            print("Either run this command from a terminal in the indexed project directory,")
             print("or specify a path: vec-search 'query' --repo /path/to/project")
             print("\nTo index a project: vec-index /path/to/project")
             sys.exit(1)
